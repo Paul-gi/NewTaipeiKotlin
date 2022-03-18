@@ -11,20 +11,13 @@ import com.example.newtaipeizookotlin.Fragments.ListPageFragment
 
 class MyApplication : Application() {
 
-//    private var mIndex = 0
     private var mNowFragment: Fragment? = null
     private lateinit var mParentFragmentManager: FragmentManager
-    private var iFirebasePageTitle = ""
-    private var iFirebasePageCode = -1
     fun setMyFragmentManager(pParentFragmentManager: FragmentManager) {
         mParentFragmentManager = pParentFragmentManager
     }
 
     fun goToNextPage(pAddFragment: Fragment, pBundle: Bundle?) {
-
-        iFirebasePageTitle = pBundle?.getString("FirebasePageTitle") ?: ""
-        iFirebasePageCode = pBundle?.getInt("FirebasePageCode") ?: -1
-
         mNowFragment = pAddFragment
 
         val iNowFragment = mNowFragment
@@ -45,18 +38,6 @@ class MyApplication : Application() {
                 break
             }
         }
-
-        //todo 試圖改造上面的for迴圈但是失敗
-//        for (iNowFragmentTag in mParentFragmentManager!!.fragments) {
-//            when (iNowFragmentTag.tag.toString()) {
-//                HomePageFragment::class.java.simpleName -> break
-//                ListPageFragment::class.java.simpleName -> break
-//                DetailPageFragment::class.java.simpleName -> break
-//            }
-//            if (iNowFragmentTag.tag != null && !iNowFragmentTag.isHidden) {
-//                mNowFragment = iNowFragmentTag
-//            }
-//        }
 
 
         if (iNowFragment != null) {
@@ -81,7 +62,5 @@ class MyApplication : Application() {
                 .addToBackStack(null)
                 .commit()
         }
-//        Log.d("aaa", "${pAddFragment.javaClass.simpleName},mIndex=$mIndex")
-//        mIndex++
     }
 }

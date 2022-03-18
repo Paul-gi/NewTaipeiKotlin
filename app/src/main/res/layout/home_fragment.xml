@@ -19,35 +19,14 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/mDepartmentButton"
-                android:layout_width="250dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="80dp"
-                android:background="@color/yellow"
-                android:foreground="@drawable/button_radius"
-                android:textColor="@color/black"
-                android:text="館區" />
+            <include
+                android:id="@+id/mAllAreaNavigationIC"
+                layout="@layout/all_area_navigation" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/mAnimalButton"
-                android:layout_width="250dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="30dp"
-                android:background="@color/yellow"
-                android:foreground="@drawable/button_radius"
-                android:textColor="@color/black"
-                android:text="動物區" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/mPlantButton"
-                android:layout_width="250dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="30dp"
-                android:background="@color/yellow"
-                android:foreground="@drawable/button_radius"
-                android:textColor="@color/black"
-                android:text="植物區" />
+            <include
+                android:id="@+id/mDepartmentSelect"
+                layout="@layout/department_selectpage_fragment"
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
