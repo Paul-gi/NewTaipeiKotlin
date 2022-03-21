@@ -21,7 +21,6 @@ class UtilCommonStr {
 
     var mAnimal = "動物簡介"
     var mPlant = "植物簡介"
-    var mKeyTitle = "mKeyTitle"
     var mInSideArea = "室內區"
     var mOutSideArea = "戶外區"
 }

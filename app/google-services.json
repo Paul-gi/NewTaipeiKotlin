@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "36531021136",
+    "project_id": "newtaipeizookotlin",
+    "storage_bucket": "newtaipeizookotlin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36531021136:android:8aefd0f046780aa8077855",
+        "android_client_info": {
+          "package_name": "com.example.newtaipeizookotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36531021136-fe7k11c6haoeipgjamcnkf2q56agt3qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACfokwPTY4IgKParNS8Kb35e8cowsESIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36531021136-fe7k11c6haoeipgjamcnkf2q56agt3qv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

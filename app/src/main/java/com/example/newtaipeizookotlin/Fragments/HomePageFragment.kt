@@ -11,6 +11,7 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
 
     override fun initView() {
         super.initView()
+        mProgressDialogCustom?.dismiss()
 
         mDataBinding.mAllAreaNavigationIC.mDepartmentButton.setOnClickListener {
             openDepartmentSelectPage()

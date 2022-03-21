@@ -20,7 +20,7 @@ import com.example.taipeizookotlin.Firebase.TransformNotification
 import com.example.taipeizookotlin.Util.UtilCommonStr
 import kotlin.random.Random
 
-class MainActivity : AppCompatActivity() {
+open class MainActivity : AppCompatActivity() {
     private var activityMainBinding: ActivityMainBinding? = null
     private lateinit var myApplication: MyApplication
     private var mIntent = Intent()
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private var mTitleStr = ""
     private var mPageCode = -1
     private var mFormFirebase = false
-    protected var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
+    private var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()//隱藏亮色主題actionBar
 
         init()
-        // fcmTest()
+        //fcmTest()
     }
 
 

@@ -4,7 +4,6 @@ package com.example.taipeizookotlin.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -13,19 +12,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newtaipeizookotlin.Fragments.DetailPageFragment
+import com.example.newtaipeizookotlin.MyApplication
 import com.example.newtaipeizookotlin.R
 import com.example.taipeizookotlin.DataList.ListData
 import com.example.taipeizookotlin.Room.AppDataBase
 import com.example.taipeizookotlin.Room.User
 import com.example.taipeizookotlin.Util.UtilTools
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.*
 
 class ListDataAdapter(
     private val mListDataItf: ListDataItf,
     private val context: Context,
     private val mTitleName: String,
     private var mPageState: Boolean,
+    private var myApplication: MyApplication,
 ) : RecyclerView.Adapter<ListDataAdapter.MyViewHolder>() {
     private val mZooDataList: ArrayList<ListData> = ArrayList<ListData>()
     private val mAlreadyRead = ArrayList<Int>()
@@ -86,7 +87,7 @@ class ListDataAdapter(
             val iD = v.tag.toString()
             if (Character.isDigit(iD[0])) {
                 iIndex = iD.toInt()
-                throwData(this.context, iIndex)
+                throwData(iIndex)
                 mListDataItf.getData(mZooDataList[iIndex])
                 setRoom(iIndex)
                 v.setBackgroundResource(R.color.gold)
@@ -110,20 +111,14 @@ class ListDataAdapter(
         var mNameCh: TextView = itemView.findViewById(R.id.mName_Ch)
         var mNameEn: TextView = itemView.findViewById(R.id.mName_En)
         var mPic01URL: ImageView = itemView.findViewById(R.id.mPic01_URL)
-
     }
 
-    private fun throwData(pContent: Context?, pPosition: Int) {
+    private fun throwData(pPosition: Int) {
         val iData: ListData = mZooDataList[pPosition]
-        val iIntent = Intent()
         val iBundle = Bundle()
-        if (pContent != null) {
-            //iIntent.setClass(pContent, DetailActivity::class.java)
-            iBundle.putString("TitleName", mTitleName)
-            iBundle.putString("ListDataAdapterListData", iData.getRawData())
-            //iIntent.putExtras(iBundle)
-           // context.startActivity(iIntent)
-        }
+        iBundle.putString("NormalTitle", mTitleName)
+        iBundle.putString("ListDataAdapterListData", iData.getRawData())
+        myApplication.goToNextPage(DetailPageFragment(), iBundle)
     }
 
     interface ListDataItf {

@@ -62,16 +62,6 @@ class FirebaseService : FirebaseMessagingService() {
     private lateinit var iPowerManager: PowerManager
     private var mFirebasePageTitle = ""
     private var mFirebasePageCode = -1
-    private var mFirebaseHavePageCode = false
-
-    /**
-     * 如果沒有firebasePageCode參數就是-1
-     * -1的話走正常的開啟流程
-     * -2就是走到Detail詳細頁面內
-     */
-    companion object {
-        var mFcmFromInDepartmentBackPage = false
-    }
 
 
     override fun onNewToken(mToken: String) {
@@ -86,11 +76,6 @@ class FirebaseService : FirebaseMessagingService() {
         mFirebasePageTitle = pRemoteMessage.data["Title"].toString()
         mFirebasePageCode = pRemoteMessage.data["PageCode"]!!.toInt()
 
-
-//        // 如果有FCM_PageCode就會開啟 打API的時候做判斷
-//        if (mFirebasePageCode != -1 && mFirebasePageTitle != "") {
-//            mFirebaseHavePageCode = true
-//        }
 
         iPowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         mUtilTools.wakeUpPhone(iPowerManager)

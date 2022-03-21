@@ -1,14 +1,17 @@
 package com.example.newtaipeizookotlin.Fragments
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.newtaipeizookotlin.MyApplication
 import com.example.newtaipeizookotlin.tools.ProgressDialogCustom
 import com.example.taipeizookotlin.Util.UtilCommonStr
@@ -19,13 +22,14 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     private var mTampDataBinding: dataBinding? = null
     protected val mDataBinding: dataBinding get() = mTampDataBinding!!
     abstract val mLayout: Int
-    private var myApplication = MyApplication()
+    protected var myApplication = MyApplication()
     protected var mProgressDialogCustom: ProgressDialogCustom? = null
     protected var mPageTitleStr = "Title"
-    private var mPageCodeInt = -1
-    private var mFromFirebase = false
+    protected var mPageCodeInt = -1
+    protected var mFromFirebase = false
     protected var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
-    private var mBundle = Bundle()
+    protected var mBundle = Bundle()
+    protected var mIsCallApi = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,25 +60,31 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             false
         )
         mTampDataBinding = iDataBinding as dataBinding?
+        getBundle()
         initView()
         return iDataBinding.root
     }
 
     protected open fun initView() {
         mProgressDialogCustom = ProgressDialogCustom(requireContext())
-        getBundle()
+        mProgressDialogCustom!!.show(parentFragmentManager, "")
+        this.parentFragment?.let { fragmentOnBackPressed(it, this.requireActivity()) }
     }
 
-    private fun getBundle() {
-        val iBundle = arguments
-        if (iBundle != null) {
-            mFromFirebase = iBundle.getBoolean("MainFormFirebase")
-            if (mFromFirebase) {
-                mPageTitleStr = iBundle.getString("MainPageTitle") ?: ""
-                mPageCodeInt = iBundle.getInt("MainPageCode") ?: -1
-            } else {
-                mPageTitleStr = iBundle.getString("NormalTitle") ?: ""
-            }
+    @SuppressLint("UseRequireInsteadOfGet")
+    protected open fun getBundle() {
+        val iBundleBox = arguments
+        if (iBundleBox != null) {
+            mBundle = iBundleBox
+        }
+
+
+        mFromFirebase = mBundle.getBoolean("MainFormFirebase")
+        if (mFromFirebase) {
+            mPageTitleStr = mBundle.getString("MainPageTitle") ?: ""
+            mPageCodeInt = mBundle.getInt("MainPageCode") ?: -1
+        } else {
+            mPageTitleStr = mBundle.getString("NormalTitle") ?: ""
         }
     }
 
@@ -83,7 +93,29 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     }
 
     protected open fun goToNextPage(pFragment: Fragment, pPageTitle: String) {
-        mBundle.putString("NormalTitle", pPageTitle)
-        myApplication.goToNextPage(pFragment, mBundle)
+        val iBundle = Bundle()
+        iBundle.putString("NormalTitle", pPageTitle)
+        myApplication.goToNextPage(pFragment, iBundle)
+    }
+
+
+    protected open fun fragmentOnBackPressed(
+        pFragment: Fragment,
+        pFragmentActivity: FragmentActivity
+    ) {
+        pFragmentActivity
+            .onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    myApplication.onBackPage(pFragment)
+                    /**
+                     * if you want onBackPressed() to be called as normal afterwards
+                     */
+//                    if (isEnabled) {
+//                        isEnabled = false
+//                        requireActivity().onBackPressed()
+//                    }
+                }
+            })
     }
 }

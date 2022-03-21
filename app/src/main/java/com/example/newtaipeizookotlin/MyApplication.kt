@@ -63,4 +63,52 @@ class MyApplication : Application() {
                 .commit()
         }
     }
+
+
+    fun onBackPage(pAddFragment: Fragment) {
+        mNowFragment = pAddFragment
+
+        val iNowFragment = mNowFragment
+        Log.d("aaa", "mNowFragment = ${mNowFragment?.tag}")
+
+        for (iNowTag in mParentFragmentManager.fragments) {
+            Log.d("aaa", "iNowTag = ${iNowTag.tag}\n")
+            if (iNowTag.tag != null && iNowTag.tag.toString() == HomePageFragment::class.java.simpleName && iNowTag.isHidden) {
+                mNowFragment = iNowTag
+                break
+            }
+            if (iNowTag.tag != null && iNowTag.tag.toString() == ListPageFragment::class.java.simpleName && iNowTag.isHidden) {
+                mNowFragment = iNowTag
+                break
+            }
+            if (iNowTag.tag != null && iNowTag.tag.toString() == DetailPageFragment::class.java.simpleName && iNowTag.isHidden) {
+                mNowFragment = iNowTag
+                break
+            }
+        }
+
+
+        if (iNowFragment != null) {
+            mParentFragmentManager.beginTransaction()
+                .add(
+                    R.id.mFragment,
+                    pAddFragment.javaClass,
+                    null,
+                    pAddFragment.javaClass.simpleName
+                )
+                .show(mNowFragment!!)
+                .addToBackStack(null)
+                .commit()
+        } else {
+            mParentFragmentManager.beginTransaction()
+                .add(
+                    R.id.mFragment,
+                    pAddFragment.javaClass,
+                    null,
+                    pAddFragment.javaClass.simpleName
+                )
+                .addToBackStack(null)
+                .commit()
+        }
+    }
 }

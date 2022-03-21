@@ -30,13 +30,12 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
 
             }
 
-        }, requireContext(), mPageTitleStr, mPageState)
+        }, requireContext(), mPageTitleStr, mPageState,myApplication)
     }
 
 
     override fun initView() {
         super.initView()
-        mProgressDialogCustom!!.show(parentFragmentManager, "")
         mLinearLayoutManager = LinearLayoutManager(this.activity)
         mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
         mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
