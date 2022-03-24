@@ -4,10 +4,10 @@ package com.example.newtaipeizookotlin.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.taipeizookotlin.DataList.ListData
+import com.example.newtaipeizookotlin.datalist.ListData
 import com.example.taipeizookotlin.Service.RetrofitManager
-import com.example.taipeizookotlin.Service.ZooApiService
-import com.example.taipeizookotlin.Util.UtilCommonStr
+import com.example.newtaipeizookotlin.service.ZooApiService
+import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import com.google.gson.JsonObject
 import org.json.JSONException
 import org.json.JSONObject
@@ -43,7 +43,7 @@ class ListPageCallViewModel : ViewModel() {
         }
         synchronized(this) { mGetData = true }
         val mZooApiService: ZooApiService =
-            RetrofitManager().getInstance()!!.createService(ZooApiService::class.java)
+            RetrofitManager().getInstance().createService(ZooApiService::class.java)
 
 
         mCall = when (pTitleName) {

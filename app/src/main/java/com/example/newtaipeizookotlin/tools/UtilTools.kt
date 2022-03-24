@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Util
+package com.example.newtaipeizookotlin.tools
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader
 import com.bumptech.glide.load.model.GlideUrl
 import com.example.newtaipeizookotlin.R
-import com.example.taipeizookotlin.DataList.ListData
-import com.example.taipeizookotlin.DataList.LocationPositionData
+import com.example.newtaipeizookotlin.datalist.ListData
+import com.example.newtaipeizookotlin.datalist.LocationPositionData
 import com.example.taipeizookotlin.Service.RetrofitManager
 import java.io.InputStream
 import java.util.*

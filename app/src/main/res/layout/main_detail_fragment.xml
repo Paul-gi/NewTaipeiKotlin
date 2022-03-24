@@ -17,7 +17,7 @@
             android:background="@color/yellow">
 
             <include
-                android:id="@+id/mTitleBar"
+                android:id="@+id/m_toolbar_layout"
                 app:layout_constraintTop_toTopOf="parent"
                 layout="@layout/toolbar_layout">
             </include>

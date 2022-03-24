@@ -12,12 +12,11 @@ import android.widget.RemoteViews
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.databinding.DataBindingUtil
-import com.example.newtaipeizookotlin.Fragments.DetailPageFragment
-import com.example.newtaipeizookotlin.Fragments.HomePageFragment
-import com.example.newtaipeizookotlin.Fragments.ListPageFragment
 import com.example.newtaipeizookotlin.databinding.ActivityMainBinding
-import com.example.taipeizookotlin.Firebase.TransformNotification
-import com.example.taipeizookotlin.Util.UtilCommonStr
+import com.example.newtaipeizookotlin.firebase.TransformNotification
+import com.example.newtaipeizookotlin.fragments.DetailPageFragment
+import com.example.newtaipeizookotlin.fragments.HomePageFragment
+import com.example.newtaipeizookotlin.fragments.ListPageFragment
 import kotlin.random.Random
 
 open class MainActivity : AppCompatActivity() {
@@ -28,7 +27,6 @@ open class MainActivity : AppCompatActivity() {
     private var mTitleStr = ""
     private var mPageCode = -1
     private var mFormFirebase = false
-    private var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +36,7 @@ open class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()//隱藏亮色主題actionBar
 
         init()
-        //fcmTest()
+       // fcmTest()
     }
 
 
@@ -46,6 +44,19 @@ open class MainActivity : AppCompatActivity() {
         getBundle(intent)
         funSelectPage()
     }
+
+
+    /**
+     * 禁止按鈕返回Activity
+     */
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        return if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            false;
+//        } else {
+//            super.onKeyDown(keyCode, event);
+//        }
+//    }
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -62,16 +73,9 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setBundle() {
-        var iTitleStr = ""
-        when (mTitleStr) {
-            "InSideArea" -> iTitleStr = mUtilCommonStr.mInSideArea
-            "OutSideArea" -> iTitleStr = mUtilCommonStr.mOutSideArea
-            "Animal" -> iTitleStr = mUtilCommonStr.mAnimal
-            "Plant" -> iTitleStr = mUtilCommonStr.mPlant
-        }
-        mBundle.putString("MainPageTitle", iTitleStr)
+        mBundle.putString("TitleName", mTitleStr)
         mBundle.putInt("MainPageCode", mPageCode)
-        mBundle.putBoolean("MainFormFirebase", mFormFirebase)
+        mBundle.putBoolean("FormFirebase", mFormFirebase)
     }
 
     private fun funSelectPage() {
@@ -90,7 +94,7 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun fcmTest() {
-        checkNotification("Animal", -1)
+        checkNotification("Plant", 2)
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")

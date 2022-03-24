@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Service
+package com.example.newtaipeizookotlin.service
 
 import com.google.gson.JsonObject
 import retrofit2.Call

@@ -1,27 +1,23 @@
-package com.example.newtaipeizookotlin.Fragments
+package com.example.newtaipeizookotlin.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newtaipeizookotlin.GoogleMapActivity
 import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.WebViewActivity
+import com.example.newtaipeizookotlin.adapter.GoogleMapGeoAdapter
 import com.example.newtaipeizookotlin.databinding.MainDetailFragmentBinding
-import com.example.taipeizookotlin.Adapter.GoogleMapGeoAdapter
-import com.example.taipeizookotlin.DataList.ListData
-import com.example.taipeizookotlin.DataList.LocationPositionData
-import com.example.taipeizookotlin.Room.AppDataBase
-import com.example.taipeizookotlin.Room.User
+import com.example.newtaipeizookotlin.datalist.ListData
+import com.example.newtaipeizookotlin.datalist.LocationPositionData
+import com.example.newtaipeizookotlin.room.AppDataBase
+import com.example.newtaipeizookotlin.room.User
 import com.example.taipeizookotlin.Service.RetrofitManager
-import com.example.taipeizookotlin.Service.ZooApiService
-import com.example.taipeizookotlin.Util.UtilCommonStr
-import com.example.taipeizookotlin.Util.UtilTools
+import com.example.newtaipeizookotlin.service.ZooApiService
+import com.example.newtaipeizookotlin.tools.UtilCommonStr
+import com.example.newtaipeizookotlin.tools.UtilTools
 import com.google.gson.JsonObject
 import org.json.JSONException
 import org.json.JSONObject
@@ -44,12 +40,21 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
     private var mGoogleMapGeoAdapter: GoogleMapGeoAdapter = GoogleMapGeoAdapter()
 
 
+//    private val mCallViewModel: DetailPageCallViewModel by lazy {
+//        ViewModelProvider(this).get(DetailPageCallViewModel::class.java)
+//    }
+
+
     override fun initView() {
         super.initView()
         if (mFromFirebase) {
             callDetailApi()
+        } else {
+            initSelectView()
         }
+    }
 
+    fun initSelectView() {
         when (mPageTitleStr) {
             UtilCommonStr.getInstance().mAnimal -> {
                 initAnimalView()
@@ -61,9 +66,24 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
                 initDepartment()
             }
         }
-        mDataBinding.mTitleBar.mToolbar.title = mPageTitleStr
-        mDataBinding.mTitleBar.mChange.visibility = View.GONE
         initBelowView()
+
+        mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
+            if(!mFromFirebase){
+                onBackToPage(this)
+            }else
+            {
+                val iBundle = Bundle()
+                //詳細頁面back之後從
+                iBundle.putString("TitleName",mOriginalTitle)
+                iBundle.putBoolean("FormDepartment", mFormDepartment)
+                iBundle.putBoolean("FormFirebase",mFromFirebase)
+                myApplication.onBackPage(this,iBundle)
+            }
+        }
+
+        mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
+        mDataBinding.mToolbarLayout.mChange.visibility = View.GONE
         mProgressDialogCustom?.dismiss()
     }
 
@@ -206,38 +226,22 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
                 startActivity(intent)
             }
         }
-        mDataBinding.mTitleBar.mBackBtn.setOnClickListener {
+        mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
             setRoom()
         }
     }
 
 
     private fun callDetailApi() {
-        mCallApi(mPageTitleStr, mPageCodeInt)
+        mCallApi(mPageCodeInt)
     }
 
-    private fun mCallApi(pTitle: String, pPageCode: Int) {
+    private fun mCallApi(pPageCode: Int) {
         val mCallDetail: Call<JsonObject>?
         val mZooApiService: ZooApiService =
-            RetrofitManager().getInstance()!!.createService(ZooApiService::class.java)
-        val mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
-        var iApiSelectTitle = ""
+            RetrofitManager().getInstance().createService(ZooApiService::class.java)
 
-
-        when (pTitle) {
-            "Animal" -> iApiSelectTitle = mUtilCommonStr.mAnimal
-            "Plant" -> iApiSelectTitle = mUtilCommonStr.mPlant
-            "OutSideArea" -> {
-                iApiSelectTitle = mUtilCommonStr.mOutSideArea
-                mFromFirebase = true
-            }
-            "InSideArea" -> {
-                iApiSelectTitle = mUtilCommonStr.mInSideArea
-                mFromFirebase = true
-            }
-        }
-
-        mCallDetail = when (pTitle) {
+        mCallDetail = when (mOriginalTitle) {
             "Animal" -> {
                 mZooApiService.getAnimalData(1, pPageCode)
             }
@@ -245,7 +249,7 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
                 mZooApiService.getPlantData(1, pPageCode)
             }
             else -> {
-                mZooApiService.getPavilionData(iApiSelectTitle, 1, pPageCode)
+                mZooApiService.getPavilionData(mPageTitleStr, 1, pPageCode)
             }
         }
 
@@ -254,23 +258,26 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
         mCallDetail.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
                 try {
-
+                    Log.d("GGG", "GGG1")
                     val iListData: ArrayList<ListData> = ArrayList()
                     assert(response.body() != null)
                     val ix = JSONObject(response.body().toString())
                     val iz = ix.getJSONObject("result").getJSONArray("results")
                     val iData = ListData()
                     iData.setData(iz.getJSONObject(0))
-                    iData.selectType(iApiSelectTitle, false)
+                    iData.selectType(mPageTitleStr, false)
                     iListData.add(iData)
 
-                    mPageTitleStr = iApiSelectTitle
+                    Log.d("GGG", iData.toString())
+
                     mListData.setRawJson(mPageTitleStr, iListData[0].getRawData())
 
-                    initView()
+                    initSelectView()
                     mProgressDialogCustom?.dismiss()
 
                 } catch (e: JSONException) {
+                    Log.d("GGG", "ESX$e")
+
                     e.printStackTrace()
                     if (e.toString() == "org.json.JSONException: Index 0 out of range [0..0)") {
                         Log.d("FirebaseFcmErrorMessage", e.toString())

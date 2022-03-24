@@ -1,4 +1,4 @@
-package com.example.newtaipeizookotlin.Fragments
+package com.example.newtaipeizookotlin.fragments
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.newtaipeizookotlin.MyApplication
 import com.example.newtaipeizookotlin.tools.ProgressDialogCustom
-import com.example.taipeizookotlin.Util.UtilCommonStr
+import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 
@@ -24,12 +24,14 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     abstract val mLayout: Int
     protected var myApplication = MyApplication()
     protected var mProgressDialogCustom: ProgressDialogCustom? = null
-    protected var mPageTitleStr = "Title"
+    protected var mPageTitleStr = "Title" //english to chinese
+    protected var mOriginalTitle = ""
     protected var mPageCodeInt = -1
     protected var mFromFirebase = false
     protected var mUtilCommonStr: UtilCommonStr = UtilCommonStr.getInstance()
     protected var mBundle = Bundle()
     protected var mIsCallApi = false
+    protected var mFormDepartment = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,24 +80,30 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             mBundle = iBundleBox
         }
 
-
-        mFromFirebase = mBundle.getBoolean("MainFormFirebase")
+        mFromFirebase = mBundle.getBoolean("FormFirebase")
+        mPageTitleStr = mBundle.getString("TitleName") ?: ""
         if (mFromFirebase) {
-            mPageTitleStr = mBundle.getString("MainPageTitle") ?: ""
             mPageCodeInt = mBundle.getInt("MainPageCode") ?: -1
-        } else {
-            mPageTitleStr = mBundle.getString("NormalTitle") ?: ""
+            mFormDepartment = mBundle.getBoolean("FormDepartment") ?: false
+        }
+
+        mOriginalTitle = mPageTitleStr
+        when (mPageTitleStr) {
+            "InSideArea" -> {
+                mPageTitleStr = mUtilCommonStr.mInSideArea
+                mFormDepartment = true
+            }
+            "OutSideArea" -> {
+                mPageTitleStr = mUtilCommonStr.mOutSideArea
+                mFormDepartment = true
+            }
+            "Animal" -> mPageTitleStr = mUtilCommonStr.mAnimal
+            "Plant" -> mPageTitleStr = mUtilCommonStr.mPlant
         }
     }
 
-    protected open fun onBackToPage() {
-        parentFragmentManager.popBackStack()
-    }
-
-    protected open fun goToNextPage(pFragment: Fragment, pPageTitle: String) {
-        val iBundle = Bundle()
-        iBundle.putString("NormalTitle", pPageTitle)
-        myApplication.goToNextPage(pFragment, iBundle)
+    protected open fun onBackToPage(pFragment: Fragment) {
+        myApplication.onBackPage(pFragment, null)
     }
 
 
@@ -107,14 +115,17 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
             .onBackPressedDispatcher
             .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    myApplication.onBackPage(pFragment)
-                    /**
-                     * if you want onBackPressed() to be called as normal afterwards
-                     */
-//                    if (isEnabled) {
-//                        isEnabled = false
-//                        requireActivity().onBackPressed()
-//                    }
+                    if(!mFromFirebase){
+                        onBackToPage(pFragment)
+                    }else
+                    {
+                        val iBundle = Bundle()
+                        //詳細頁面back之後從
+                        iBundle.putString("TitleName",mOriginalTitle)
+                        iBundle.putBoolean("FormDepartment", mFormDepartment)
+                        iBundle.putBoolean("FormFirebase",mFromFirebase)
+                        myApplication.onBackPage(pFragment,iBundle)
+                    }
                 }
             })
     }

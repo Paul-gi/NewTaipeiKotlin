@@ -27,15 +27,18 @@ class RetrofitManager {
         return retrofit().create(service)
     }
 
-    fun getInstance(): RetrofitManager? {
-        if (mRetrofitManager == null) {
+    fun getInstance(): RetrofitManager {
+        val iTamp = mRetrofitManager
+        return if( iTamp == null) {
+            val iiTamp:RetrofitManager
             synchronized(Retrofit::class.java) {
-                if (mRetrofitManager == null) {
-                    mRetrofitManager = RetrofitManager()
-                }
+                iiTamp = RetrofitManager()
             }
+            mRetrofitManager = iiTamp
+            iiTamp
+        }  else {
+            iTamp
         }
-        return mRetrofitManager
     }
 
     private fun retrofit(): Retrofit {

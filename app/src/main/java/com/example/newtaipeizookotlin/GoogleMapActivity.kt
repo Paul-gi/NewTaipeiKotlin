@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newtaipeizookotlin.adapter.GoogleMapItemAdapter
 import com.example.newtaipeizookotlin.databinding.GoogleMapFragmentBinding
-import com.example.taipeizookotlin.Adapter.GoogleMapItemAdapter
-import com.example.taipeizookotlin.DataList.LocationPositionData
+import com.example.newtaipeizookotlin.datalist.LocationPositionData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

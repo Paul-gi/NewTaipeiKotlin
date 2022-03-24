@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Adapter
+package com.example.newtaipeizookotlin.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newtaipeizookotlin.R
-import com.example.taipeizookotlin.DataList.LocationPositionData
+import com.example.newtaipeizookotlin.datalist.LocationPositionData
 import java.util.*
 
 class GoogleMapItemAdapter : RecyclerView.Adapter<GoogleMapItemAdapter.MyViewHolder>() {

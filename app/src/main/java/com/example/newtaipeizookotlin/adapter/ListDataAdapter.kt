@@ -1,6 +1,6 @@
 @file:Suppress("PackageName")
 
-package com.example.taipeizookotlin.Adapter
+package com.example.newtaipeizookotlin.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,13 +12,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newtaipeizookotlin.Fragments.DetailPageFragment
+import com.example.newtaipeizookotlin.fragments.DetailPageFragment
 import com.example.newtaipeizookotlin.MyApplication
 import com.example.newtaipeizookotlin.R
-import com.example.taipeizookotlin.DataList.ListData
-import com.example.taipeizookotlin.Room.AppDataBase
-import com.example.taipeizookotlin.Room.User
-import com.example.taipeizookotlin.Util.UtilTools
+import com.example.newtaipeizookotlin.datalist.ListData
+import com.example.newtaipeizookotlin.room.AppDataBase
+import com.example.newtaipeizookotlin.room.User
+import com.example.newtaipeizookotlin.tools.UtilTools
 import java.util.*
 
 class ListDataAdapter(
@@ -116,7 +116,7 @@ class ListDataAdapter(
     private fun throwData(pPosition: Int) {
         val iData: ListData = mZooDataList[pPosition]
         val iBundle = Bundle()
-        iBundle.putString("NormalTitle", mTitleName)
+        iBundle.putString("TitleName", mTitleName)
         iBundle.putString("ListDataAdapterListData", iData.getRawData())
         myApplication.goToNextPage(DetailPageFragment(), iBundle)
     }

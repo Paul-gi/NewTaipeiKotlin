@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Adapter
+package com.example.newtaipeizookotlin.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newtaipeizookotlin.R
-import com.example.taipeizookotlin.DataList.LocationPositionData
-import java.util.ArrayList
+import com.example.newtaipeizookotlin.datalist.LocationPositionData
+import java.util.*
 
 class GoogleMapGeoAdapter : RecyclerView.Adapter<GoogleMapGeoAdapter.MyViewHolder>() {
     private val mGeoDataList: ArrayList<LocationPositionData> = ArrayList<LocationPositionData>()

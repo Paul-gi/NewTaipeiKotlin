@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Firebase
+package com.example.newtaipeizookotlin.firebase
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -13,7 +13,7 @@ import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.example.newtaipeizookotlin.R
-import com.example.taipeizookotlin.Util.UtilTools
+import com.example.newtaipeizookotlin.tools.UtilTools
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import kotlin.random.Random
@@ -42,14 +42,14 @@ class FirebaseService : FirebaseMessagingService() {
 
     //manifest 加入權限
     // <service
-    //            android:name="com.example.taipeizookotlin.Firebase.FirebaseService"
+    //            android:name="com.example.newtaipeizookotlin.firebase.FirebaseService"
     //            android:exported="false">
     //            <intent-filter>
     //                <action android:name="com.google.firebase.MESSAGING_EVENT" />
     //            </intent-filter>
     //        </service>
 
-    //走broadCast記得在 manifest加入<receiver android:name="com.example.taipeizookotlin.Firebase.TransformNotification"/>
+    //走broadCast記得在 manifest加入<receiver android:name="com.example.newtaipeizookotlin.firebase.TransformNotification"/>
 
 
 

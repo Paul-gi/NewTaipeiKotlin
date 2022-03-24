@@ -1,6 +1,6 @@
 @file:Suppress("PackageName")
 
-package com.example.taipeizookotlin.Util
+package com.example.newtaipeizookotlin.tools
 
 class UtilCommonStr {
 

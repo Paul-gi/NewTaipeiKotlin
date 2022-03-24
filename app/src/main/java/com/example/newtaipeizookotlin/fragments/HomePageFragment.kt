@@ -1,4 +1,4 @@
-package com.example.newtaipeizookotlin.Fragments
+package com.example.newtaipeizookotlin.fragments
 
 import android.view.View
 import com.example.newtaipeizookotlin.R
@@ -8,9 +8,16 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
     override val mLayout: Int
         get() = R.layout.home_fragment
 
+    private var mFcmFromDepartment = false
 
     override fun initView() {
         super.initView()
+        getBundle()
+
+        if (mFcmFromDepartment) {
+            openDepartmentSelectPage()
+        }
+
         mProgressDialogCustom?.dismiss()
 
         mDataBinding.mAllAreaNavigationIC.mDepartmentButton.setOnClickListener {
@@ -18,11 +25,11 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
         }
 
         mDataBinding.mAllAreaNavigationIC.mAnimalButton.setOnClickListener {
-            goToNextPage(ListPageFragment(), mUtilCommonStr.mAnimal)
+            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mAnimal)
         }
 
         mDataBinding.mAllAreaNavigationIC.mPlantButton.setOnClickListener {
-            goToNextPage(ListPageFragment(), mUtilCommonStr.mPlant)
+            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mPlant)
         }
 
         mDataBinding.mDepartmentSelect.mToolbarLayout.mBackBtn.setOnClickListener {
@@ -30,11 +37,11 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
         }
 
         mDataBinding.mDepartmentSelect.mInDoorAreaBtn.setOnClickListener {
-            goToNextPage(ListPageFragment(), mUtilCommonStr.mInSideArea)
+            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mInSideArea)
         }
 
         mDataBinding.mDepartmentSelect.mOutDoorAreaBtn.setOnClickListener {
-            goToNextPage(ListPageFragment(), mUtilCommonStr.mOutSideArea)
+            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mOutSideArea)
         }
 
     }
@@ -47,5 +54,12 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
     private fun openDepartmentSelectPage() {
         mDataBinding.mAllAreaNavigationIC.root.visibility = View.GONE
         mDataBinding.mDepartmentSelect.root.visibility = View.VISIBLE
+    }
+
+    override fun getBundle() {
+        val iBundleBox = arguments
+        if (iBundleBox != null) {
+            mFcmFromDepartment = iBundleBox.getBoolean("FormDepartment")
+        }
     }
 }

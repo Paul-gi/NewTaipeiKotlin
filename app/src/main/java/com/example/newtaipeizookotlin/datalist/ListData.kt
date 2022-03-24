@@ -1,6 +1,6 @@
-package com.example.taipeizookotlin.DataList
+package com.example.newtaipeizookotlin.datalist
 
-import com.example.taipeizookotlin.Util.UtilCommonStr
+import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import org.json.JSONException
 import org.json.JSONObject
 

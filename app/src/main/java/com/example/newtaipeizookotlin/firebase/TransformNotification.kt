@@ -1,4 +1,4 @@
-package com.example.taipeizookotlin.Firebase
+package com.example.newtaipeizookotlin.firebase
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -14,6 +14,7 @@ class TransformNotification : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         val iFirebasePageTitle = intent?.extras?.getString("FirebasePageTitle") ?: ""
         val iFirebasePageCode = intent?.extras?.getInt("FirebasePageCode") ?: -1
+
 
         mIntent = Intent(context, MainActivity::class.java)
         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
