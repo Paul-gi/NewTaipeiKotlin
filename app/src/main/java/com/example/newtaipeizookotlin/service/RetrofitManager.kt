@@ -1,6 +1,6 @@
 @file:Suppress("PackageName")
 
-package com.example.taipeizookotlin.Service
+package com.example.newtaipeizookotlin.service
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -30,7 +30,7 @@ class RetrofitManager {
     fun getInstance(): RetrofitManager {
         val iTamp = mRetrofitManager
         return if( iTamp == null) {
-            val iiTamp:RetrofitManager
+            val iiTamp: RetrofitManager
             synchronized(Retrofit::class.java) {
                 iiTamp = RetrofitManager()
             }

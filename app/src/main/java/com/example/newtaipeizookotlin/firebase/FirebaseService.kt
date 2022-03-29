@@ -73,8 +73,8 @@ class FirebaseService : FirebaseMessagingService() {
     override fun onMessageReceived(pRemoteMessage: RemoteMessage) {
         super.onMessageReceived(pRemoteMessage)
 
-        mFirebasePageTitle = pRemoteMessage.data["Title"].toString()
-        mFirebasePageCode = pRemoteMessage.data["PageCode"]!!.toInt()
+        mFirebasePageTitle = pRemoteMessage.data["Title"] ?: ""
+        mFirebasePageCode = pRemoteMessage.data["PageCode"]?.toInt() ?: -1
 
 
         iPowerManager = getSystemService(Context.POWER_SERVICE) as PowerManager

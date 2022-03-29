@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.datalist.ListData
 import com.example.newtaipeizookotlin.room.AppDataBase
 import com.example.newtaipeizookotlin.room.User
+import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import com.example.newtaipeizookotlin.tools.UtilTools
 import java.util.*
 
@@ -32,8 +34,7 @@ class ListDataAdapter(
     private val mAlreadyRead = ArrayList<Int>()
     private val mSynchronizedUsed = "aa"
 
-    @Suppress("DEPRECATION")
-    private val mHandler = Handler()
+    private val mHandler = Handler(Looper.getMainLooper())
     private val mRunnable = Runnable { changeUI() }
     private val mUtilTools: UtilTools = UtilTools()
 

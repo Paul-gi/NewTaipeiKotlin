@@ -11,12 +11,13 @@ import com.example.newtaipeizookotlin.fragments.ListPageFragment
 
 class MyApplication : Application() {
 
-    private var mNowFragment: Fragment? = null
+    var mOpenDepartmentSelectPage = false
     private lateinit var mParentFragmentManager: FragmentManager
+
+
     fun setMyFragmentManager(pParentFragmentManager: FragmentManager) {
         mParentFragmentManager = pParentFragmentManager
     }
-
 
     fun goToNextPage(pFragment: Fragment, pPageTitle: String) {
         val iBundle = Bundle()
@@ -24,97 +25,79 @@ class MyApplication : Application() {
         goToNextPage(pFragment, iBundle)
     }
 
-
+    //邏輯請更改
     fun goToNextPage(pAddFragment: Fragment, pBundle: Bundle?) {
-        mNowFragment = pAddFragment
 
-        val iNowFragment = mNowFragment
+        Log.d("bbb", "GOTOpAddFragment = ${pAddFragment.tag}")
+        var iNowFragment = pAddFragment
 
         for (iNowTag in mParentFragmentManager.fragments) {
             if (iNowTag.tag != null && iNowTag.tag.toString() == HomePageFragment::class.java.simpleName && !iNowTag.isHidden) {
-                mNowFragment = iNowTag
+                iNowFragment = iNowTag
                 break
             }
             if (iNowTag.tag != null && iNowTag.tag.toString() == ListPageFragment::class.java.simpleName && !iNowTag.isHidden) {
-                mNowFragment = iNowTag
+                iNowFragment = iNowTag
                 break
             }
             if (iNowTag.tag != null && iNowTag.tag.toString() == DetailPageFragment::class.java.simpleName && !iNowTag.isHidden) {
-                mNowFragment = iNowTag
+                iNowFragment = iNowTag
                 break
             }
         }
+        Log.d("bbb", "GOTOiNowFragment = ${iNowFragment.tag}")
 
-
-        if (iNowFragment != null) {
-            mParentFragmentManager.beginTransaction()
-                .add(
-                    R.id.mFragment,
-                    pAddFragment.javaClass,
-                    pBundle,
-                    pAddFragment.javaClass.simpleName
-                )
-                .hide(mNowFragment!!)
-                .addToBackStack(null)
-                .commit()
-        } else {
-            mParentFragmentManager.beginTransaction()
-                .add(
-                    R.id.mFragment,
-                    HomePageFragment().javaClass,
-                    pBundle,
-                    pAddFragment.javaClass.simpleName
-                )
-                .addToBackStack(null)
-                .commit()
-        }
+        mParentFragmentManager.beginTransaction()
+            .add(
+                R.id.mFragment,
+                pAddFragment.javaClass,
+                pBundle,
+                pAddFragment.javaClass.simpleName
+            )
+            .hide(iNowFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
 
-    fun onBackPage(pNowFragment: Fragment, pBundle: Bundle?) {
+    fun onBackPage() {
         val iSizeFromFragments = mParentFragmentManager.fragments.size
+
         if (iSizeFromFragments > 0) {
-            Log.d("bbb", "pNowFragment = ${pNowFragment.tag}")
             var iPreFragment: Fragment = mParentFragmentManager.fragments[0]
+            var iNowFragment: Fragment = mParentFragmentManager.fragments[0]
 
             for (iIndex in 0 until iSizeFromFragments) {
                 val iTampFragment = mParentFragmentManager.fragments[iIndex]
-                Log.d("bbb", "iStackFragment = ${iTampFragment.tag}")
+                if (!iTampFragment.isHidden && iTampFragment.tag != "com.bumptech.glide.manager") {
+                    iNowFragment = iTampFragment
+                }
 
                 //因為遇到glide 神奇的問題需要用這種方式遇到跳過處理
                 if (iTampFragment.tag == "com.bumptech.glide.manager") {
                     continue
                 } else {
-                    if (iTampFragment != pNowFragment) {
+                    if (iTampFragment != iNowFragment) {
                         iPreFragment = iTampFragment
                     }
                 }
             }
+            Log.d("bbb", "BACKiNowFragment = ${iNowFragment.tag}")
+            Log.d("bbb", "BACKiPreFragment = ${iPreFragment.tag}")
 
-
-            val iFromFirebase = pBundle?.getBoolean("FormFirebase")
-            if (iFromFirebase == true && mParentFragmentManager.fragments.size <= 2) {
-                for (iFragment in mParentFragmentManager.fragments) {
-                    mParentFragmentManager.beginTransaction()
-                        .remove(iFragment)
-                        .commit()
-                }
-                if (pNowFragment.tag != null && pNowFragment.tag.toString() == ListPageFragment::class.java.simpleName) {
-                    goToNextPage(HomePageFragment(), pBundle)
-                } else if (pNowFragment.tag != null && pNowFragment.tag.toString() == DetailPageFragment::class.java.simpleName) {
-                    goToNextPage(ListPageFragment(), pBundle)
-                } else {
+            if (iNowFragment.tag != null && iNowFragment.tag.toString() == HomePageFragment::class.java.simpleName) {
+                if(mOpenDepartmentSelectPage){
+                    goToNextPage(HomePageFragment(), "")
+                }else{
                     return
                 }
+            } else if (mParentFragmentManager.fragments.size <= 2) {
+                goToNextPage(HomePageFragment(), "")
             } else {
-                if (pNowFragment.tag != null && pNowFragment.tag.toString() == HomePageFragment::class.java.simpleName) {
-                    return
-                } else {
-                    mParentFragmentManager.beginTransaction()
-                        .show(iPreFragment)
-                        .remove(pNowFragment)
-                        .commit()
-                }
+                mParentFragmentManager.beginTransaction()
+                    .show(iPreFragment)
+                    .remove(iNowFragment)
+                    .commit()
             }
         }
     }

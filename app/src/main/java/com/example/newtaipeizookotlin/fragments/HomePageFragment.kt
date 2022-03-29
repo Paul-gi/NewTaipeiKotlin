@@ -49,17 +49,12 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
     private fun openHomePage() {
         mDataBinding.mAllAreaNavigationIC.root.visibility = View.VISIBLE
         mDataBinding.mDepartmentSelect.root.visibility = View.GONE
+        myApplication.mOpenDepartmentSelectPage = false
     }
 
     private fun openDepartmentSelectPage() {
         mDataBinding.mAllAreaNavigationIC.root.visibility = View.GONE
         mDataBinding.mDepartmentSelect.root.visibility = View.VISIBLE
-    }
-
-    override fun getBundle() {
-        val iBundleBox = arguments
-        if (iBundleBox != null) {
-            mFcmFromDepartment = iBundleBox.getBoolean("FormDepartment")
-        }
+        myApplication.mOpenDepartmentSelectPage = true
     }
 }

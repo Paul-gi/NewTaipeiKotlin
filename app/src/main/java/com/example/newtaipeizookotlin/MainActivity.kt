@@ -36,19 +36,21 @@ open class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()//隱藏亮色主題actionBar
 
         init()
-       // fcmTest()
+        fcmTest()
     }
-
 
     private fun init() {
         getBundle(intent)
         funSelectPage()
     }
 
+    override fun onBackPressed() {
+        myApplication.onBackPage()
+    }
 
-    /**
-     * 禁止按鈕返回Activity
-     */
+    //    /**
+//     * 禁止按鈕返回Activity
+//     */
 //    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
 //        return if (keyCode == KeyEvent.KEYCODE_BACK) {
 //            false;
@@ -94,7 +96,7 @@ open class MainActivity : AppCompatActivity() {
 
 
     private fun fcmTest() {
-        checkNotification("Plant", 2)
+        checkNotification("OutSideArea", 2)
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")

@@ -54,14 +54,14 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val iDataBinding = DataBindingUtil.inflate<ViewDataBinding>(
             inflater,
             mLayout,
             container,
             false
         )
-        mTampDataBinding = iDataBinding as dataBinding?
+        mTampDataBinding = iDataBinding as dataBinding
         getBundle()
         initView()
         return iDataBinding.root
@@ -70,7 +70,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     protected open fun initView() {
         mProgressDialogCustom = ProgressDialogCustom(requireContext())
         mProgressDialogCustom!!.show(parentFragmentManager, "")
-        this.parentFragment?.let { fragmentOnBackPressed(it, this.requireActivity()) }
+        // this.parentFragment?.let { fragmentOnBackPressed(it, this.requireActivity()) }
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
@@ -83,8 +83,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         mFromFirebase = mBundle.getBoolean("FormFirebase")
         mPageTitleStr = mBundle.getString("TitleName") ?: ""
         if (mFromFirebase) {
-            mPageCodeInt = mBundle.getInt("MainPageCode") ?: -1
-            mFormDepartment = mBundle.getBoolean("FormDepartment") ?: false
+            mPageCodeInt = mBundle.getInt("MainPageCode")
         }
 
         mOriginalTitle = mPageTitleStr
@@ -102,31 +101,24 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         }
     }
 
-    protected open fun onBackToPage(pFragment: Fragment) {
-        myApplication.onBackPage(pFragment, null)
+    protected open fun onBackToPage() {
+        myApplication.onBackPage()
     }
 
 
-    protected open fun fragmentOnBackPressed(
-        pFragment: Fragment,
-        pFragmentActivity: FragmentActivity
-    ) {
-        pFragmentActivity
-            .onBackPressedDispatcher
-            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if(!mFromFirebase){
-                        onBackToPage(pFragment)
-                    }else
-                    {
-                        val iBundle = Bundle()
-                        //詳細頁面back之後從
-                        iBundle.putString("TitleName",mOriginalTitle)
-                        iBundle.putBoolean("FormDepartment", mFormDepartment)
-                        iBundle.putBoolean("FormFirebase",mFromFirebase)
-                        myApplication.onBackPage(pFragment,iBundle)
-                    }
-                }
-            })
-    }
+    /**
+     * 抓取fragment onBackPressed方法
+     */
+//    protected open fun fragmentOnBackPressed(
+//        pFragment: Fragment,
+//        pFragmentActivity: FragmentActivity
+//    ) {
+//        pFragmentActivity
+//            .onBackPressedDispatcher
+//            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+//                override fun handleOnBackPressed() {
+//                    onBackToPage()
+//                }
+//            })
+//    }
 }

@@ -1,15 +1,14 @@
 package com.example.newtaipeizookotlin.fragments
 
-import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newtaipeizookotlin.R
-import com.example.newtaipeizookotlin.databinding.ListPageFragmentBinding
-import com.example.newtaipeizookotlin.viewmodel.ListPageCallViewModel
 import com.example.newtaipeizookotlin.adapter.ListDataAdapter
+import com.example.newtaipeizookotlin.databinding.ListPageFragmentBinding
 import com.example.newtaipeizookotlin.datalist.ListData
+import com.example.newtaipeizookotlin.viewmodel.ListPageCallViewModel
 
 class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
     override val mLayout: Int
@@ -43,14 +42,7 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
         mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
         mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
-            if (!mFromFirebase) {
-                onBackToPage(this)
-            } else {
-                val iBundle = Bundle()
-                iBundle.putBoolean("FormDepartment", mFormDepartment)
-                iBundle.putBoolean("FormFirebase", mFromFirebase)
-                myApplication.onBackPage(this, iBundle)
-            }
+                onBackToPage()
         }
 
         mDataBinding.mRecycleView.adapter = mListDataAdapter

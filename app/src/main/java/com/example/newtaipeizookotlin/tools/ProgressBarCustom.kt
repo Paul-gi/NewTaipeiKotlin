@@ -12,23 +12,23 @@ import com.example.newtaipeizookotlin.R
 
 
 class ProgressDialogCustom(private var mContext: Context) : DialogFragment() {
-    private var mDialog: Dialog? = null
+//    private var mDialog: Dialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view: View = inflater.inflate(R.layout.progressbar, container, false)
-        initView(mContext)
-        return view
+//        val view: View = inflater.inflate(R.layout.progressbar, container, false)
+        //initView(mContext)
+        return inflater.inflate(R.layout.progressbar, container, false)
     }
 
-    private fun initView(pContext: Context) {
-//        var lp = dialog!!.window!!.attributes
-//        var window = mDialog?.window
-        mDialog = Dialog(pContext)
-        mDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        lp.width = ViewGroup.LayoutParams.MATCH_PARENT
-//        window!!.setLayout(lp.width, 200)
-    }
+//    private fun initView(pContext: Context) {
+////        var lp = dialog!!.window!!.attributes
+////        var window = mDialog?.window
+////        mDialog = Dialog(pContext)
+////        mDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+////        lp.width = ViewGroup.LayoutParams.MATCH_PARENT
+////        window!!.setLayout(lp.width, 200)
+//    }
 }

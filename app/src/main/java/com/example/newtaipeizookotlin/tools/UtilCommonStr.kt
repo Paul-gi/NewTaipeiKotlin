@@ -19,8 +19,10 @@ class UtilCommonStr {
         }
     }
 
-    var mAnimal = "動物簡介"
-    var mPlant = "植物簡介"
-    var mInSideArea = "室內區"
-    var mOutSideArea = "戶外區"
+    val mAnimal = "動物簡介"
+    val mPlant = "植物簡介"
+    val mInSideArea = "室內區"
+    val mOutSideArea = "戶外區"
+
+    val mFirebasePageTitle = "FirebasePageTitle"
 }

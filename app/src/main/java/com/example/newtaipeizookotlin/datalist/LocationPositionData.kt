@@ -12,12 +12,9 @@ class LocationPositionData : Serializable {
         mKeyLocationLogo = keyLocationLogo
     }
 
-    fun getKeyLocationLogo(): String? {
-        return if (mKeyLocationLogo != null) {
-            mKeyLocationLogo
-        } else {
-            ""
-        }
+    fun getKeyLocationLogo(): String {
+        val iKeyLocationLogo = mKeyLocationLogo
+        return iKeyLocationLogo ?: ""
     }
 
     fun getKeyXPosition(): String? {

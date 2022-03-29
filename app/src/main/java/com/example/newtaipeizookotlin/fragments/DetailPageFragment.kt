@@ -14,7 +14,7 @@ import com.example.newtaipeizookotlin.datalist.ListData
 import com.example.newtaipeizookotlin.datalist.LocationPositionData
 import com.example.newtaipeizookotlin.room.AppDataBase
 import com.example.newtaipeizookotlin.room.User
-import com.example.taipeizookotlin.Service.RetrofitManager
+import com.example.newtaipeizookotlin.service.RetrofitManager
 import com.example.newtaipeizookotlin.service.ZooApiService
 import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import com.example.newtaipeizookotlin.tools.UtilTools
@@ -69,17 +69,7 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
         initBelowView()
 
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
-            if(!mFromFirebase){
-                onBackToPage(this)
-            }else
-            {
-                val iBundle = Bundle()
-                //詳細頁面back之後從
-                iBundle.putString("TitleName",mOriginalTitle)
-                iBundle.putBoolean("FormDepartment", mFormDepartment)
-                iBundle.putBoolean("FormFirebase",mFromFirebase)
-                myApplication.onBackPage(this,iBundle)
-            }
+                onBackToPage()
         }
 
         mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
@@ -171,7 +161,7 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
             )
             mUtilTools.setPictureGone(
                 requireContext(),
-                mListData.keyUrl02()!!,
+                mListData.keyUrl02(),
                 mDataBinding.mBelowDetail.mAPic02URL,
                 mDataBinding.mBelowDetail.mAPic02ALT
             )

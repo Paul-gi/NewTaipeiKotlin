@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.PowerManager
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
@@ -14,7 +15,7 @@ import com.bumptech.glide.load.model.GlideUrl
 import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.datalist.ListData
 import com.example.newtaipeizookotlin.datalist.LocationPositionData
-import com.example.taipeizookotlin.Service.RetrofitManager
+import com.example.newtaipeizookotlin.service.RetrofitManager
 import java.io.InputStream
 import java.util.*
 
@@ -34,7 +35,7 @@ class UtilTools {
             Glide.get(pContext!!).registry
                 .replace(
                     GlideUrl::class.java, InputStream::class.java,
-                    OkHttpUrlLoader.Factory(RetrofitManager().getInstance()?.getSSLOkHttpClient()!!)
+                    OkHttpUrlLoader.Factory(RetrofitManager().getInstance().getSSLOkHttpClient())
                 )
             isFirst = false
         }
@@ -60,24 +61,20 @@ class UtilTools {
         pContext: Context?,
         pURL: String,
         pImageView: ImageView,
-        pTextView: TextView?,
+        pTextView: TextView,
         mImageTitleView: TextView
     ) {
         if (pURL == "") {
             pImageView.visibility = View.GONE
             mImageTitleView.visibility = View.GONE
-            if (pTextView != null) {
-                pTextView.visibility = View.GONE
-            }
+            pTextView.visibility = View.GONE
         } else {
             try {
                 controlPicture(pContext, pURL, pImageView)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            if (pTextView != null) {
-                pTextView.text = pURL
-            }
+            pTextView.text = pURL
         }
     }
 
@@ -92,20 +89,21 @@ class UtilTools {
     @Throws(Exception::class)
     fun setPictureGone(
         pContext: Context?,
-        pURL: String,
+        pURL: String?,
         pImageView: ImageView,
-        pTextView: TextView?
+        pTextView: TextView
     ) {
-        if (pURL == "") {
-            pImageView.visibility = View.GONE
-            if (pTextView != null) {
+        pURL?.let {
+            if (it.isEmpty()) {
+                pImageView.visibility = View.GONE
                 pTextView.visibility = View.GONE
-            }
-        } else {
-            controlPicture(pContext, pURL, pImageView)
-            if (pTextView != null) {
+            } else {
+                controlPicture(pContext, pURL, pImageView)
                 pTextView.text = pURL
             }
+        } ?: kotlin.run {
+            pImageView.visibility = View.GONE
+            pTextView.visibility = View.GONE
         }
     }
 
@@ -113,7 +111,6 @@ class UtilTools {
     /**
      * 設定地理位置名稱
      */
-    @Suppress("NAME_SHADOWING")
     fun setGeo(
         pListData: ListData,
         pLocationPositionData: LocationPositionData,
@@ -121,16 +118,16 @@ class UtilTools {
     ) {
         //"熱帶雨林室內館(穿山甲館)；兩棲爬蟲動物館",
         //"沙漠動物區；兒童動物區"
-        var pLocationPositionData: LocationPositionData = pLocationPositionData
+        var iLocationPositionData: LocationPositionData = pLocationPositionData
         val iGeo: String? = pListData.getKeyLocation()
         val iGeoSplit = iGeo?.split("；")?.toTypedArray()
         var iGeoStore: String
         if (iGeoSplit != null) {
             for (i in iGeoSplit.indices) {
                 iGeoStore = iGeoSplit[i].replace("\"".toRegex(), "")
-                pLocationPositionData.setKeyLocationLogo(iGeoStore)
-                pGeoListData.add(pLocationPositionData)
-                pLocationPositionData = LocationPositionData()
+                iLocationPositionData.setKeyLocationLogo(iGeoStore)
+                pGeoListData.add(iLocationPositionData)
+                iLocationPositionData = LocationPositionData()
             }
         }
     }
@@ -158,10 +155,14 @@ class UtilTools {
         val iLocationStore = iLocation.split("-").toTypedArray()
         for (i in iLocationStore.indices) {
             iSplit = iLocationStore[i].split(" ").toTypedArray()
-            pLocationPositionData.setKeyXPosition(iSplit[iCount])
-            pLocationPositionData.setKeyYPosition(iSplit[iCount + 1])
-            pLocationPositionDataArrayList.add(pLocationPositionData)
-            pLocationPositionData = LocationPositionData()
+            Log.v("aaa","iLocationStore zzzz=${iSplit.size}")
+            if( iSplit.size == 2) {
+                pLocationPositionData.setKeyXPosition(iSplit[iCount])
+                pLocationPositionData.setKeyYPosition(iSplit[iCount + 1])
+                pLocationPositionDataArrayList.add(pLocationPositionData)
+                pLocationPositionData = LocationPositionData()
+            }
+
             iCount = 0
         }
     }

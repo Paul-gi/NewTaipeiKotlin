@@ -46,6 +46,7 @@ class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback,
         iSupportMapFragment.getMapAsync(this)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getBundle() {
         val iBundle = intent.extras
         if (iBundle != null) {
