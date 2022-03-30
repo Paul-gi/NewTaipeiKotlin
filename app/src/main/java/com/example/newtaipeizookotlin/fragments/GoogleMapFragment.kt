@@ -1,10 +1,10 @@
-package com.example.newtaipeizookotlin
+package com.example.newtaipeizookotlin.fragments
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.adapter.GoogleMapItemAdapter
 import com.example.newtaipeizookotlin.databinding.GoogleMapFragmentBinding
 import com.example.newtaipeizookotlin.datalist.LocationPositionData
-import com.example.newtaipeizookotlin.fragments.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback

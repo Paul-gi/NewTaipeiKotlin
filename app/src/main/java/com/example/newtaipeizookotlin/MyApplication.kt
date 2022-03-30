@@ -3,9 +3,11 @@ package com.example.newtaipeizookotlin
 import android.app.Application
 import android.os.Bundle
 import android.util.Log
+import android.webkit.WebViewFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.newtaipeizookotlin.fragments.DetailPageFragment
+import com.example.newtaipeizookotlin.fragments.GoogleMapFragment
 import com.example.newtaipeizookotlin.fragments.HomePageFragment
 import com.example.newtaipeizookotlin.fragments.ListPageFragment
 
@@ -45,6 +47,10 @@ class MyApplication : Application() {
                 break
             }
             if (iNowTag.tag != null && iNowTag.tag.toString() == GoogleMapFragment::class.java.simpleName && !iNowTag.isHidden) {
+                iNowFragment = iNowTag
+                break
+            }
+            if (iNowTag.tag != null && iNowTag.tag.toString() == com.example.newtaipeizookotlin.fragments.WebViewFragment::class.java.simpleName && !iNowTag.isHidden) {
                 iNowFragment = iNowTag
                 break
             }

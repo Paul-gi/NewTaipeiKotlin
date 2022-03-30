@@ -1,13 +1,10 @@
 package com.example.newtaipeizookotlin.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newtaipeizookotlin.GoogleMapFragment
 import com.example.newtaipeizookotlin.R
-import com.example.newtaipeizookotlin.WebViewActivity
 import com.example.newtaipeizookotlin.adapter.GoogleMapGeoAdapter
 import com.example.newtaipeizookotlin.databinding.MainDetailFragmentBinding
 import com.example.newtaipeizookotlin.datalist.ListData
@@ -205,12 +202,10 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
                 //點擊外開影片連結
 //                Intent pIntent = new Intent(Intent.ACTION_VIEW, Uri.parse((mListData.getKeyVedio())));
 //                startActivity(pIntent);
-                val intent = Intent()
-                val bundle = Bundle()
-                bundle.putString("getUrl", mListData.getKeyVedio())
-                intent.setClass(requireContext(), WebViewActivity::class.java)
-                intent.putExtras(bundle)
-                startActivity(intent)
+                val iBundle = Bundle()
+                iBundle.putSerializable("getUrl", mListData.getKeyVedio())
+                myApplication.goToNextPage(WebViewFragment(), iBundle)
+
             }
         }
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {

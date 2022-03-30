@@ -24,8 +24,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".WebViewActivity"/>
-        <activity android:name=".GoogleMapFragment"/>
         <receiver android:name=".firebase.TransformNotification"/>
         <activity
             android:name=".MainActivity"
