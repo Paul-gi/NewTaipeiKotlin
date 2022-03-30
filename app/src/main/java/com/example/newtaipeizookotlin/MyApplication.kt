@@ -12,7 +12,7 @@ import com.example.newtaipeizookotlin.fragments.ListPageFragment
 class MyApplication : Application() {
 
     var mOpenDepartmentSelectPage = false
-    private lateinit var mParentFragmentManager: FragmentManager
+    lateinit var mParentFragmentManager: FragmentManager
 
 
     fun setMyFragmentManager(pParentFragmentManager: FragmentManager) {
@@ -41,6 +41,10 @@ class MyApplication : Application() {
                 break
             }
             if (iNowTag.tag != null && iNowTag.tag.toString() == DetailPageFragment::class.java.simpleName && !iNowTag.isHidden) {
+                iNowFragment = iNowTag
+                break
+            }
+            if (iNowTag.tag != null && iNowTag.tag.toString() == GoogleMapFragment::class.java.simpleName && !iNowTag.isHidden) {
                 iNowFragment = iNowTag
                 break
             }
@@ -86,9 +90,9 @@ class MyApplication : Application() {
             Log.d("bbb", "BACKiPreFragment = ${iPreFragment.tag}")
 
             if (iNowFragment.tag != null && iNowFragment.tag.toString() == HomePageFragment::class.java.simpleName) {
-                if(mOpenDepartmentSelectPage){
+                if (mOpenDepartmentSelectPage) {
                     goToNextPage(HomePageFragment(), "")
-                }else{
+                } else {
                     return
                 }
             } else if (mParentFragmentManager.fragments.size <= 2) {

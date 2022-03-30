@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.newtaipeizookotlin.GoogleMapActivity
+import com.example.newtaipeizookotlin.GoogleMapFragment
 import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.WebViewActivity
 import com.example.newtaipeizookotlin.adapter.GoogleMapGeoAdapter
@@ -69,7 +69,7 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
         initBelowView()
 
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
-                onBackToPage()
+            onBackToPage()
         }
 
         mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
@@ -188,12 +188,9 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
         mUtilTools.setGeo(mListData, mLocationPositionData, mGeoListData)
         mUtilTools.setLocation(mListData, mLocationPositionData, mLocationPositionListData)
         mDataBinding.mBelowDetail.mLocation.setOnClickListener {
-            val iIntent = Intent()
             val iBundle = Bundle()
             iBundle.putSerializable("mLocationPositionListData", mLocationPositionListData)
-            iIntent.setClass(requireActivity(), GoogleMapActivity::class.java)
-            iIntent.putExtras(iBundle)
-            startActivity(iIntent)
+            myApplication.goToNextPage(GoogleMapFragment(), iBundle)
         }
         mGoogleMapGeoAdapter.setData(mGeoListData)
         mDataBinding.mBelowDetail.mGeoRecycleViewGeo.layoutManager =

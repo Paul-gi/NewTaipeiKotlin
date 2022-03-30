@@ -1,12 +1,10 @@
 package com.example.newtaipeizookotlin
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newtaipeizookotlin.adapter.GoogleMapItemAdapter
 import com.example.newtaipeizookotlin.databinding.GoogleMapFragmentBinding
 import com.example.newtaipeizookotlin.datalist.LocationPositionData
+import com.example.newtaipeizookotlin.fragments.BaseFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,40 +13,36 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import java.util.*
 
-class GoogleMapActivity : AppCompatActivity(), OnMapReadyCallback,
+class GoogleMapFragment : BaseFragment<GoogleMapFragmentBinding>(), OnMapReadyCallback,
     GoogleMapItemAdapter.MapViewRecycleViewClickListener {
-    private lateinit var mFragmentGoogleMapBinding: GoogleMapFragmentBinding
+    override val mLayout: Int
+        get() = R.layout.google_map_fragment
+
     private lateinit var mGoogleMap: GoogleMap
     private lateinit var mLatLng: LatLng
     private var mLocationPositionListData: ArrayList<LocationPositionData> =
         ArrayList<LocationPositionData>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mFragmentGoogleMapBinding =
-            DataBindingUtil.setContentView(this, R.layout.google_map_fragment)
-        getBundle()
-        init()
-    }
 
+    override fun initView() {
 
-    private fun init() {
-        mFragmentGoogleMapBinding.mGoogleMapRecycleView.layoutManager = LinearLayoutManager(
-            this,
+        mDataBinding.mGoogleMapRecycleView.layoutManager = LinearLayoutManager(
+            requireContext(),
             LinearLayoutManager.HORIZONTAL,
             false
         )
+
         val mGoogleMapItemAdapter = GoogleMapItemAdapter()
-        mGoogleMapItemAdapter.setData(mLocationPositionListData,this)
-        mFragmentGoogleMapBinding.mGoogleMapRecycleView.adapter = mGoogleMapItemAdapter
+        mGoogleMapItemAdapter.setData(mLocationPositionListData, this)
+        mDataBinding.mGoogleMapRecycleView.adapter = mGoogleMapItemAdapter
         val iSupportMapFragment =
-            (supportFragmentManager.findFragmentById(R.id.mGoogleMap) as SupportMapFragment?)!!
+            (childFragmentManager.findFragmentById(R.id.mGoogleMap) as SupportMapFragment?)!!
         iSupportMapFragment.getMapAsync(this)
     }
 
     @Suppress("UNCHECKED_CAST")
-    private fun getBundle() {
-        val iBundle = intent.extras
+    override fun getBundle() {
+        val iBundle = arguments
         if (iBundle != null) {
             mLocationPositionListData =
                 iBundle.getSerializable("mLocationPositionListData") as ArrayList<LocationPositionData>
