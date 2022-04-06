@@ -21,7 +21,9 @@ class GoogleMapItemAdapter : RecyclerView.Adapter<GoogleMapItemAdapter.MyViewHol
     ) {
         mMapViewRecycleViewClickListener = pMapViewRecycleViewClickListener
         mLocationDataList.clear()
-        mLocationDataList.addAll(pLocationList!!)
+        if (pLocationList != null) {
+            mLocationDataList.addAll(pLocationList)
+        }
         notifyDataSetChanged()
     }
 
@@ -53,11 +55,11 @@ class GoogleMapItemAdapter : RecyclerView.Adapter<GoogleMapItemAdapter.MyViewHol
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var mItem: TextView = itemView.findViewById(R.id.mLocationItem)
-        private var mMapViewRecycleViewClickListener: MapViewRecycleViewClickListener =
-            pMapViewRecycleViewClickListener!!
+        private var mMapViewRecycleViewClickListener: MapViewRecycleViewClickListener? =
+            pMapViewRecycleViewClickListener
 
         override fun onClick(v: View) {
-            mMapViewRecycleViewClickListener.onMapViewClicked(adapterPosition)
+            mMapViewRecycleViewClickListener?.onMapViewClicked(adapterPosition)
         }
 
         init {

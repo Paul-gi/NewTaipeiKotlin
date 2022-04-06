@@ -24,6 +24,8 @@ class WebViewFragment:BaseFragment<WebviewActivityBinding>(){
 
     override fun getBundle() {
         val iBundle = arguments
-        mUrlString = iBundle!!.getString("getUrl").toString()
+        if (iBundle != null) {
+            mUrlString = iBundle.getString("getUrl").toString()
+        }
     }
 }

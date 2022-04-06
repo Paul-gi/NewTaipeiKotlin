@@ -69,7 +69,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
 
     protected open fun initView() {
         mProgressDialogCustom = ProgressDialogCustom(requireContext())
-        mProgressDialogCustom!!.show(parentFragmentManager, "")
+        mProgressDialogCustom?.show(parentFragmentManager, "")
         // this.parentFragment?.let { fragmentOnBackPressed(it, this.requireActivity()) }
     }
 

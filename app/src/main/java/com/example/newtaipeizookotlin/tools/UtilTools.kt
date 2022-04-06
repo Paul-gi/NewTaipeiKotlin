@@ -32,21 +32,25 @@ class UtilTools {
     fun controlPicture(pContext: Context?, pString: String, pImage: ImageView?) {
         val iStringSplit: String = pString.replace("\\?".toRegex(), "")
         if (isFirst) {
-            Glide.get(pContext!!).registry
-                .replace(
-                    GlideUrl::class.java, InputStream::class.java,
-                    OkHttpUrlLoader.Factory(RetrofitManager().getInstance().getSSLOkHttpClient())
-                )
+            if (pContext != null) {
+                Glide.get(pContext).registry
+                    .replace(
+                        GlideUrl::class.java, InputStream::class.java,
+                        OkHttpUrlLoader.Factory(RetrofitManager().getInstance().getSSLOkHttpClient())
+                    )
+            }
             isFirst = false
         }
         //https@ //www.zoo.gov.tw/iTAP/03_Animals/InsectHouse/0_InsectHouse/TS/Trachychorax Sexpunctatus01.jpg
         pImage?.let {
-            Glide.with(pContext!!)
-                .asBitmap()
-                .load(iStringSplit)
-                .placeholder(R.drawable.loading)
-                .error(R.drawable.error)
-                .into(it)
+            if (pContext != null) {
+                Glide.with(pContext)
+                    .asBitmap()
+                    .load(iStringSplit)
+                    .placeholder(R.drawable.loading)
+                    .error(R.drawable.error)
+                    .into(it)
+            }
         }
     }
 

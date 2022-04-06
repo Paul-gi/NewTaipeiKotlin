@@ -22,7 +22,9 @@ class GoogleMapGeoAdapter : RecyclerView.Adapter<GoogleMapGeoAdapter.MyViewHolde
     @SuppressLint("NotifyDataSetChanged")
     fun setData(pLocationDataList: ArrayList<LocationPositionData>?) {
         mGeoDataList.clear()
-        mGeoDataList.addAll(pLocationDataList!!)
+        if (pLocationDataList != null) {
+            mGeoDataList.addAll(pLocationDataList)
+        }
         notifyDataSetChanged()
     }
 

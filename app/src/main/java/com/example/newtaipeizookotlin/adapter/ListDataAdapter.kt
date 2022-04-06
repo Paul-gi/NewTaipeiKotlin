@@ -45,7 +45,9 @@ class ListDataAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(pAnimalDataList: ArrayList<ListData>?) {
-        mZooDataList.addAll(pAnimalDataList!!)
+        if (pAnimalDataList != null) {
+            mZooDataList.addAll(pAnimalDataList)
+        }
         notifyDataSetChanged()
     }
 
@@ -132,8 +134,8 @@ class ListDataAdapter(
             synchronized(mSynchronizedUsed) {
                 val iFindData = mAlreadyRead.indexOf(pPosition)
                 if (iFindData == -1) {
-                    val ix = AppDataBase.getInstance(context)!!
-                        .userDao().findByName(mTitleName, pPosition, pEnglishName, pChineseName)
+                    val ix = AppDataBase.getInstance(context)
+                        ?.userDao()?.findByName(mTitleName, pPosition, pEnglishName, pChineseName)
                     if (ix != null) {
                         mAlreadyRead.add(pPosition)
                         mHandler.removeCallbacks(mRunnable)

@@ -60,7 +60,7 @@ class ListPageCallViewModel : ViewModel() {
 
 
 
-        mCall!!.enqueue(object : Callback<JsonObject?> {
+        mCall?.enqueue(object : Callback<JsonObject?> {
             override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
                 try {
                     val iListData: ArrayList<ListData> = ArrayList<ListData>()

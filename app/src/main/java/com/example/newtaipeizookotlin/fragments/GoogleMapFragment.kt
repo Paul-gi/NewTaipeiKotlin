@@ -36,8 +36,8 @@ class GoogleMapFragment : BaseFragment<GoogleMapFragmentBinding>(), OnMapReadyCa
         mGoogleMapItemAdapter.setData(mLocationPositionListData, this)
         mDataBinding.mGoogleMapRecycleView.adapter = mGoogleMapItemAdapter
         val iSupportMapFragment =
-            (childFragmentManager.findFragmentById(R.id.mGoogleMap) as SupportMapFragment?)!!
-        iSupportMapFragment.getMapAsync(this)
+            (childFragmentManager.findFragmentById(R.id.mGoogleMap) as SupportMapFragment?)
+        iSupportMapFragment?.getMapAsync(this)
     }
 
     @Suppress("UNCHECKED_CAST")

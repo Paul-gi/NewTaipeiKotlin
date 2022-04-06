@@ -149,13 +149,15 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
 
     private fun initBelowView() {
         try {
-            mUtilTools.setPictureGone(
-                requireContext(),
-                mListData.keyUrl01()!!,
-                mDataBinding.mBelowDetail.mAPic01URL,
-                mDataBinding.mBelowDetail.mAPic01ALT,
-                mDataBinding.mBelowDetail.mImageTitle
-            )
+            mListData.keyUrl01()?.let {
+                mUtilTools.setPictureGone(
+                    requireContext(),
+                    it,
+                    mDataBinding.mBelowDetail.mAPic01URL,
+                    mDataBinding.mBelowDetail.mAPic01ALT,
+                    mDataBinding.mBelowDetail.mImageTitle
+                )
+            }
             mUtilTools.setPictureGone(
                 requireContext(),
                 mListData.keyUrl02(),
@@ -164,13 +166,13 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
             )
             mUtilTools.setPictureGone(
                 requireContext(),
-                mListData.keyUrl03()!!,
+                mListData.keyUrl03(),
                 mDataBinding.mBelowDetail.mAPic03URL,
                 mDataBinding.mBelowDetail.mAPic03ALT
             )
             mUtilTools.setPictureGone(
                 requireContext(),
-                mListData.keyUrl04()!!,
+                mListData.keyUrl04(),
                 mDataBinding.mBelowDetail.mAPic04URL,
                 mDataBinding.mBelowDetail.mAPic04ALT
             )

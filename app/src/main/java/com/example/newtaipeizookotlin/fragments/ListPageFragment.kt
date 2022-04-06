@@ -65,7 +65,7 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
         mDataBinding.mRecycleView.setOnScrollChangeListener { _, _, _, _, _ ->
             if (!mDataBinding.mRecycleView.canScrollVertically(1)) {
                 if (!mFinish) {
-                    mProgressDialogCustom!!.show(parentFragmentManager, "")
+                    mProgressDialogCustom?.show(parentFragmentManager, "")
                     callApiThread()
                 } else {
                     Toast.makeText(activity, "到底了", Toast.LENGTH_SHORT).show()
@@ -78,7 +78,7 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
         mCallViewModel.getDataListObserver().observe(viewLifecycleOwner) { pCallData ->
             if (pCallData != null) {
                 mListDataAdapter.setData(pCallData)
-                mProgressDialogCustom!!.dismiss()
+                mProgressDialogCustom?.dismiss()
             }
         }
         callApiThread()

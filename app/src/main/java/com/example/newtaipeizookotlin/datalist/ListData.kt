@@ -95,108 +95,108 @@ class ListData {
 
 
     fun keyUrl02(): String? {
-        return getData(mZooDataDetail!!.keyUrl02)
+        return getData(mZooDataDetail?.keyUrl02)
     }
 
     fun keyUrl03(): String? {
-        return getData(mZooDataDetail!!.keyUrl03)
+        return getData(mZooDataDetail?.keyUrl03)
     }
 
     fun keyUrl04(): String? {
-        return getData(mZooDataDetail!!.keyUrl04)
+        return getData(mZooDataDetail?.keyUrl04)
     }
 
     fun getKeyAlt01(): String? {
-        return getData(mZooDataDetail!!.keyAlt01)
+        return getData(mZooDataDetail?.keyAlt01)
     }
 
     fun getKeyAlt02(): String? {
-        return getData(mZooDataDetail!!.keyAlt02)
+        return getData(mZooDataDetail?.keyAlt02)
     }
 
     fun getKeyAlt03(): String? {
-        return getData(mZooDataDetail!!.keyAlt03)
+        return getData(mZooDataDetail?.keyAlt03)
     }
 
     fun getKeyAlt04(): String? {
-        return getData(mZooDataDetail!!.keyAlt04)
+        return getData(mZooDataDetail?.keyAlt04)
     }
 
     fun getKeyClass(): String? {
-        return getData(mZooDataDetail!!.keyClass)
+        return getData(mZooDataDetail?.keyClass)
     }
 
     fun getKeyDistribution(): String? {
-        return getData(mZooDataDetail!!.keyDistribution)
+        return getData(mZooDataDetail?.keyDistribution)
     }
 
     fun getKeyFamily(): String? {
-        return getData(mZooDataDetail!!.keyFamily)
+        return getData(mZooDataDetail?.keyFamily)
     }
 
     fun getKeyGeo(): String? {
-        return getData(mZooDataDetail!!.keyGeo)
+        return getData(mZooDataDetail?.keyGeo)
     }
 
     fun getKeyLocation(): String? {
-        return getData(mZooDataDetail!!.keyLocation)
+        return getData(mZooDataDetail?.keyLocation)
     }
 
     fun getKeyVedio(): String? {
-        return getData(mZooDataDetail!!.keyVedio)
+        return getData(mZooDataDetail?.keyVedio)
     }
 
     fun getKeyFunctionApplication(): String? {
-        return getData(mZooDataDetail!!.KeyFunctionApplication)
+        return getData(mZooDataDetail?.KeyFunctionApplication)
     }
 
     fun getKeyGenus(): String? {
-        return getData(mZooDataDetail!!.KeyGenus)
+        return getData(mZooDataDetail?.KeyGenus)
     }
 
     fun getKeyFeature(): String? {
-        return getData(mZooDataDetail!!.KeyFeature)
+        return getData(mZooDataDetail?.KeyFeature)
     }
 
     fun getKeyBrief(): String? {
-        return getData(mZooDataDetail!!.KeyBrief)
+        return getData(mZooDataDetail?.KeyBrief)
     }
 
     fun getKeyAlsoKnown(): String? {
-        return getData(mZooDataDetail!!.KeymAlsoKnown)
+        return getData(mZooDataDetail?.KeymAlsoKnown)
     }
 
     fun getKeyKeyInfo(): String? {
-        return getData(mZooDataDetail!!.KeyInfo)
+        return getData(mZooDataDetail?.KeyInfo)
     }
 
 //    fun getKeyE_Pic_URL(): String? {
-//        return getData(mZooDataDetail!!.KeyE_Pic_URL)
+//        return getData(mZooDataDetail?.KeyE_Pic_URL)
 //    }
 
     fun getKeyMemo(): String? {
-        return getData(mZooDataDetail!!.KeyMemo)
+        return getData(mZooDataDetail?.KeyMemo)
     }
 
     fun getKeyUrl(): String? {
-        return getData(mZooDataDetail!!.KeyUrl)
+        return getData(mZooDataDetail?.KeyUrl)
     }
 
     fun getKeyEName(): String? {
-        return getData(mZooDataDetail!!.KeyEName)
+        return getData(mZooDataDetail?.KeyEName)
     }
 
     fun getKeyBehavior(): String? {
-        return getData(mZooDataDetail!!.keyBehavior)
+        return getData(mZooDataDetail?.keyBehavior)
     }
 
     private fun getData(pKey: String?): String? {
-        var pKey = pKey
-        if (pKey == null || pKey == "") {
-            pKey = ""
+        var iKey = pKey
+        if (iKey == null || iKey == "") {
+            iKey = ""
         }
         return try {
-            mJsonObject!!.getString(pKey)
+            mJsonObject?.getString(iKey)
         } catch (e: JSONException) {
             e.printStackTrace()
             ""
