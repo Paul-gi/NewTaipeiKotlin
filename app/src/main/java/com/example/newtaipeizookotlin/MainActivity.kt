@@ -45,7 +45,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        myApplication.onBackPage()
+        myApplication.goToPage()
     }
 
     //    /**
@@ -86,12 +86,13 @@ open class MainActivity : AppCompatActivity() {
         setBundle()
 
         if (mTitleStr != "" && mPageCode != -1) {
-            myApplication.goToNextPage(DetailPageFragment(), mBundle)
+            myApplication.goToPage(DetailPageFragment(), mBundle)
         } else if (mTitleStr != "" && mPageCode == -1) {
-            myApplication.goToNextPage(ListPageFragment(), mBundle)
+            myApplication.goToPage(ListPageFragment(), mBundle)
         } else {
-            myApplication.goToNextPage(HomePageFragment(), null)
+            myApplication.goToPage(HomePageFragment(), null)
         }
+
     }
 
 

@@ -37,17 +37,7 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         myApplication = requireActivity().application as MyApplication
-
-        FirebaseMessaging.getInstance().subscribeToTopic("news")
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-            // Get new FCM registration token
-            val token = task.result
-            Log.d("firebaseToken", token.toString())
-        })
+        getFireBaseToken()
     }
 
     override fun onCreateView(
@@ -102,7 +92,21 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
     }
 
     protected open fun onBackToPage() {
-        myApplication.onBackPage()
+        myApplication.goToPage()
+    }
+
+
+    private fun getFireBaseToken() {
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            // Get new FCM registration token
+            val token = task.result
+            Log.d("firebaseToken", token.toString())
+        })
     }
 
 

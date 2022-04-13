@@ -19,10 +19,11 @@ import java.util.*
 class ListPageCallViewModel : ViewModel() {
     private val mDataList: MutableLiveData<ArrayList<ListData>?> =
         MutableLiveData<ArrayList<ListData>?>()
-    private val mFinish = MutableLiveData<Boolean>()
+    private val mIsNoData = MutableLiveData<Boolean>()
+   // private val mFFF = MutableLiveData<String>()
     private var mIndex = 0
-    private var mIsNotFinish = false
-    private var mGetData = false
+    private var mNotMoreData = false
+    private var mGettingData = false
     private var mCall: Call<JsonObject>? = null
 
     fun getDataListObserver(): MutableLiveData<ArrayList<ListData>?> {
@@ -30,18 +31,22 @@ class ListPageCallViewModel : ViewModel() {
     }
 
     fun getDataFinishState(): MutableLiveData<Boolean> {
-        return mFinish
+        return mIsNoData
     }
+
+//    fun getDataFFFFState(): MutableLiveData<String> {
+//        return mFFF
+//    }
 
     fun mCallApi(pTitleName: String) {
 
-        if (mIsNotFinish) {
+        if (mNotMoreData) {
             return
         }
-        if (mGetData) {
+        if (mGettingData) {
             return
         }
-        synchronized(this) { mGetData = true }
+        synchronized(this) { mGettingData = true }
         val mZooApiService: ZooApiService =
             RetrofitManager().getInstance().createService(ZooApiService::class.java)
 
@@ -77,10 +82,10 @@ class ListPageCallViewModel : ViewModel() {
                     if (iListData.size == 50) {
                         mIndex += 50
                     } else {
-                        mIsNotFinish = true
-                        mFinish.postValue(true)
+                        mNotMoreData = true
+                        mIsNoData.postValue(true)
                     }
-                    mGetData = false
+                    mGettingData = false
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }

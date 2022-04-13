@@ -17,7 +17,7 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
 
     private var mLinearLayoutManager: LinearLayoutManager? = null
     private var mGridLayoutManager: GridLayoutManager? = null
-    private var mFinish = false
+    private var mIsNoData = false
     private var mPageState = true
 
     private val mCallViewModel: ListPageCallViewModel by lazy {
@@ -34,25 +34,23 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
     }
 
 
-
     override fun initView() {
         super.initView()
         getBundle()
         mLinearLayoutManager = LinearLayoutManager(this.activity)
+        mGridLayoutManager = GridLayoutManager(activity, 2)
         mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
         mDataBinding.mToolbarLayout.mToolbar.title = mPageTitleStr
         mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
-                onBackToPage()
+            onBackToPage()
         }
 
         mDataBinding.mRecycleView.adapter = mListDataAdapter
         mDataBinding.mToolbarLayout.mChange.setOnClickListener {
             if (!mPageState) {
-                mGridLayoutManager = GridLayoutManager(activity, 1)
                 mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
                 mPageState = true
             } else {
-                mGridLayoutManager = GridLayoutManager(activity, 2)
                 mDataBinding.mRecycleView.layoutManager = mGridLayoutManager
                 mPageState = false
             }
@@ -64,7 +62,7 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
         //================================RecycleView 到底刷新的部分＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
         mDataBinding.mRecycleView.setOnScrollChangeListener { _, _, _, _, _ ->
             if (!mDataBinding.mRecycleView.canScrollVertically(1)) {
-                if (!mFinish) {
+                if (!mIsNoData) {
                     mProgressDialogCustom?.show(parentFragmentManager, "")
                     callApiThread()
                 } else {
@@ -73,14 +71,20 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
             }
         }
         mCallViewModel.getDataFinishState().observe(viewLifecycleOwner) { aBoolean ->
-            mFinish = aBoolean
+            mIsNoData = aBoolean
         }
-        mCallViewModel.getDataListObserver().observe(viewLifecycleOwner) { pCallData ->
+        mCallViewModel.getDataListObserver().observe(viewLifecycleOwner, { pCallData ->
             if (pCallData != null) {
                 mListDataAdapter.setData(pCallData)
                 mProgressDialogCustom?.dismiss()
             }
-        }
+        })
+
+//        mCallViewModel.getDataFFFFState().observe(viewLifecycleOwner, { pString ->
+//            val pTTT = pString
+//
+//        })
+
         callApiThread()
     }
 

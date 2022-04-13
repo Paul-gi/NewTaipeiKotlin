@@ -210,9 +210,6 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
 
             }
         }
-        mDataBinding.mToolbarLayout.mBackBtn.setOnClickListener {
-            setRoom()
-        }
     }
 
 
@@ -255,7 +252,7 @@ class DetailPageFragment : BaseFragment<MainDetailFragmentBinding>() {
                     Log.d("GGG", iData.toString())
 
                     mListData.setRawJson(mPageTitleStr, iListData[0].getRawData())
-
+                    setRoom()
                     initSelectView()
                     mProgressDialogCustom?.dismiss()
 

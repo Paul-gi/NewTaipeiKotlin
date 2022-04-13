@@ -119,7 +119,6 @@ class FirebaseService : FirebaseMessagingService() {
                 mIntent, PendingIntent.FLAG_UPDATE_CURRENT
             )
 
-
         /**
          * 兩種客製化版本
          */

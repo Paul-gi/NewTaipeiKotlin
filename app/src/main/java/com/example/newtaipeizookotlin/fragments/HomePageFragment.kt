@@ -1,5 +1,6 @@
 package com.example.newtaipeizookotlin.fragments
 
+import android.os.Bundle
 import android.view.View
 import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.databinding.HomeFragmentBinding
@@ -25,11 +26,11 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
         }
 
         mDataBinding.mAllAreaNavigationIC.mAnimalButton.setOnClickListener {
-            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mAnimal)
+            setBundleAndSendToPage(mUtilCommonStr.mAnimal)
         }
 
         mDataBinding.mAllAreaNavigationIC.mPlantButton.setOnClickListener {
-            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mPlant)
+            setBundleAndSendToPage(mUtilCommonStr.mPlant)
         }
 
         mDataBinding.mDepartmentSelect.mToolbarLayout.mBackBtn.setOnClickListener {
@@ -37,13 +38,19 @@ class HomePageFragment : BaseFragment<HomeFragmentBinding>() {
         }
 
         mDataBinding.mDepartmentSelect.mInDoorAreaBtn.setOnClickListener {
-            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mInSideArea)
+            setBundleAndSendToPage(mUtilCommonStr.mInSideArea)
         }
 
         mDataBinding.mDepartmentSelect.mOutDoorAreaBtn.setOnClickListener {
-            myApplication.goToNextPage(ListPageFragment(), mUtilCommonStr.mOutSideArea)
+            setBundleAndSendToPage(mUtilCommonStr.mOutSideArea)
         }
 
+    }
+
+    private fun setBundleAndSendToPage(pStrTamp: String) {
+        val iBundle = Bundle()
+        iBundle.putString("TitleName", pStrTamp)
+        myApplication.goToPage(ListPageFragment(), iBundle)
     }
 
     private fun openHomePage() {

@@ -21,14 +21,22 @@ class MyApplication : Application() {
         mParentFragmentManager = pParentFragmentManager
     }
 
-    fun goToNextPage(pFragment: Fragment, pPageTitle: String) {
-        val iBundle = Bundle()
-        iBundle.putString("TitleName", pPageTitle)
-        goToNextPage(pFragment, iBundle)
+    fun goToPage(pFragment: Fragment?=null, pBundle: Bundle?=null) {
+        pFragment?.let {
+            goToNextPage(it, pBundle)
+        } ?: kotlin.run {
+            onBackPage()
+        }
     }
 
+//    fun goToNextPage(pFragment: Fragment, pPageTitle: String) {
+//        val iBundle = Bundle()
+//        iBundle.putString("TitleName", pPageTitle)
+//        goToNextPage(pFragment, iBundle)
+//    }
+
     //邏輯請更改
-    fun goToNextPage(pAddFragment: Fragment, pBundle: Bundle?) {
+    fun goToNextPage(pAddFragment: Fragment, pBundle: Bundle? = null) {
 
         Log.d("bbb", "GOTOpAddFragment = ${pAddFragment.tag}")
         var iNowFragment = pAddFragment
@@ -70,7 +78,7 @@ class MyApplication : Application() {
     }
 
 
-    fun onBackPage() {
+    private fun onBackPage() {
         val iSizeFromFragments = mParentFragmentManager.fragments.size
 
         if (iSizeFromFragments > 0) {
@@ -97,12 +105,12 @@ class MyApplication : Application() {
 
             if (iNowFragment.tag != null && iNowFragment.tag.toString() == HomePageFragment::class.java.simpleName) {
                 if (mOpenDepartmentSelectPage) {
-                    goToNextPage(HomePageFragment(), "")
+                    goToNextPage(HomePageFragment())
                 } else {
                     return
                 }
             } else if (mParentFragmentManager.fragments.size <= 2) {
-                goToNextPage(HomePageFragment(), "")
+                goToNextPage(HomePageFragment())
             } else {
                 mParentFragmentManager.beginTransaction()
                     .show(iPreFragment)

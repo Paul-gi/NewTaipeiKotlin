@@ -19,7 +19,6 @@ import com.example.newtaipeizookotlin.R
 import com.example.newtaipeizookotlin.datalist.ListData
 import com.example.newtaipeizookotlin.room.AppDataBase
 import com.example.newtaipeizookotlin.room.User
-import com.example.newtaipeizookotlin.tools.UtilCommonStr
 import com.example.newtaipeizookotlin.tools.UtilTools
 import java.util.*
 
@@ -90,7 +89,7 @@ class ListDataAdapter(
             val iD = v.tag.toString()
             if (Character.isDigit(iD[0])) {
                 iIndex = iD.toInt()
-                throwData(iIndex)
+                toDetailPage(iIndex)
                 mListDataItf.getData(mZooDataList[iIndex])
                 setRoom(iIndex)
                 v.setBackgroundResource(R.color.gold)
@@ -116,7 +115,7 @@ class ListDataAdapter(
         var mPic01URL: ImageView = itemView.findViewById(R.id.mPic01_URL)
     }
 
-    private fun throwData(pPosition: Int) {
+    private fun toDetailPage(pPosition: Int) {
         val iData: ListData = mZooDataList[pPosition]
         val iBundle = Bundle()
         iBundle.putString("TitleName", mTitleName)
@@ -134,9 +133,9 @@ class ListDataAdapter(
             synchronized(mSynchronizedUsed) {
                 val iFindData = mAlreadyRead.indexOf(pPosition)
                 if (iFindData == -1) {
-                    val ix = AppDataBase.getInstance(context)
+                    val iFindDataBaseData = AppDataBase.getInstance(context)
                         ?.userDao()?.findByName(mTitleName, pPosition, pEnglishName, pChineseName)
-                    if (ix != null) {
+                    if (iFindDataBaseData != null) {
                         mAlreadyRead.add(pPosition)
                         mHandler.removeCallbacks(mRunnable)
                         mHandler.postDelayed(mRunnable, 500)
