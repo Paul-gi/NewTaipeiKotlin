@@ -80,11 +80,11 @@ abstract class BaseFragment<dataBinding : ViewDataBinding> : Fragment() {
         when (mPageTitleStr) {
             "InSideArea" -> {
                 mPageTitleStr = mUtilCommonStr.mInSideArea
-                mFormDepartment = true
+                //mFormDepartment = true
             }
             "OutSideArea" -> {
                 mPageTitleStr = mUtilCommonStr.mOutSideArea
-                mFormDepartment = true
+                //mFormDepartment = true
             }
             "Animal" -> mPageTitleStr = mUtilCommonStr.mAnimal
             "Plant" -> mPageTitleStr = mUtilCommonStr.mPlant

@@ -54,7 +54,7 @@ class GoogleMapItemAdapter : RecyclerView.Adapter<GoogleMapItemAdapter.MyViewHol
         pMapViewRecycleViewClickListener: MapViewRecycleViewClickListener?
     ) :
         RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        var mItem: TextView = itemView.findViewById(R.id.mLocationItem)
+        val mItem: TextView = itemView.findViewById(R.id.mLocationItem)
         private var mMapViewRecycleViewClickListener: MapViewRecycleViewClickListener? =
             pMapViewRecycleViewClickListener
 

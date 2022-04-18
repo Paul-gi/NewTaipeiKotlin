@@ -46,6 +46,8 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
         }
 
         mDataBinding.mRecycleView.adapter = mListDataAdapter
+
+
         mDataBinding.mToolbarLayout.mChange.setOnClickListener {
             if (!mPageState) {
                 mDataBinding.mRecycleView.layoutManager = mLinearLayoutManager
@@ -54,6 +56,9 @@ class ListPageFragment : BaseFragment<ListPageFragmentBinding>() {
                 mDataBinding.mRecycleView.layoutManager = mGridLayoutManager
                 mPageState = false
             }
+            //todo mListDataAdapter.setPageState(mPageState)
+            //  mDataBinding.mRecycleView.adapter = mListDataAdapter    是否多做一步？
+            //  answer : 沒有因為是點擊後才會重設定adapter 否則切換鍵ui會跑掉
             mListDataAdapter.setPageState(mPageState)
             mDataBinding.mRecycleView.adapter = mListDataAdapter
         }

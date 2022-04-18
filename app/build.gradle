@@ -4,13 +4,27 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
 }
-android{
+android {
     buildFeatures {
         //noinspection DataBindingWithoutKapt
         dataBinding = true
     }
 }
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Users/giiiii/Desktop/zoo')
+            storePassword '963852'
+            keyAlias 'zoo'
+            keyPassword '963852'
+        }
+        debug {
+            storeFile file('/Users/giiiii/Desktop/zoo')
+            storePassword '963852'
+            keyAlias 'zoo'
+            keyPassword '963852'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
@@ -27,6 +41,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
         }
     }
     compileOptions {
@@ -78,5 +95,5 @@ dependencies {
     //room
     implementation 'androidx.room:room-runtime:2.2.5'
     implementation "androidx.room:room-ktx:2.2.5"
-    kapt   'androidx.room:room-compiler:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
 }

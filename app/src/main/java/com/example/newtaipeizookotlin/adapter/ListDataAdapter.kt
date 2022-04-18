@@ -133,9 +133,9 @@ class ListDataAdapter(
             synchronized(mSynchronizedUsed) {
                 val iFindData = mAlreadyRead.indexOf(pPosition)
                 if (iFindData == -1) {
-                    val iFindDataBaseData = AppDataBase.getInstance(context)
+                    val iFindDataInRoom = AppDataBase.getInstance(context)
                         ?.userDao()?.findByName(mTitleName, pPosition, pEnglishName, pChineseName)
-                    if (iFindDataBaseData != null) {
+                    if (iFindDataInRoom != null) {
                         mAlreadyRead.add(pPosition)
                         mHandler.removeCallbacks(mRunnable)
                         mHandler.postDelayed(mRunnable, 500)
