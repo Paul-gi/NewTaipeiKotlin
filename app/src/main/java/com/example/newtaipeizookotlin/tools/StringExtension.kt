@@ -19,6 +19,7 @@ import java.util.regex.Pattern
 
 
 fun String.getColorSpannable(color: Int): Spannable {
+    //
     val indexStart = 0
     val spannable: Spannable = SpannableString(this)
     if (this.contains("\n")) {
