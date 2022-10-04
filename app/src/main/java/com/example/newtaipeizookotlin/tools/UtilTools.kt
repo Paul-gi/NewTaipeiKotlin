@@ -220,5 +220,66 @@ class UtilTools {
         //釋放資源
         wl.release()
     }
+
+
+    /**
+     * 字串遮罩
+     *java
+     * @param text       原始字串
+     * @param start      遮罩起始位置index
+     * @param length     遮罩長度
+     * @param maskSymbol 遮罩符號
+     * @return 遮罩過的字串
+     */
+//    private String mask(String text, int start, int length, String maskSymbol) {
+//        if (text == null || text.isEmpty()) {
+//            return "";
+//        }
+//        if (start < 0) {
+//            start = 0;
+//        }
+//        if (length < 1) {
+//            return text;
+//        }
+//
+//        StringBuilder sb = new StringBuilder();
+//        char[] cc = text.toCharArray();
+//        for (int i = 0; i < cc.length; i++) {
+//            if (i >= start && i < (start + length)) {
+//                sb.append(maskSymbol);
+//            } else {
+//                sb.append(cc[i]);
+//            }
+//        }
+//        return sb.toString();
+//    }
+    /**
+     * 隱碼規則
+     * 帳戶：不用隱碼
+     * 手機：0910***888
+     * 信用卡卡號：************1234
+     * 身分證字號：G2******90
+     * 姓名： 林Ｏ如
+     */
+    fun String.mask(start: Int, end: Int, mask: String): String {
+        return if (this.length > start && this.length > end) {
+            val sb = StringBuilder()
+            val chars = this.toCharArray()
+            for (i in 0 until chars.size) {
+                if (i < start) {
+                    sb.append(chars[i])
+                } else if (i >= chars.size - end && i < chars.size) {
+                    sb.append(chars[i])
+                } else {
+                    sb.append(mask)
+                }
+            }
+            sb.toString()
+        } else {
+            ""
+        }
+    }
+
+
 }
 
